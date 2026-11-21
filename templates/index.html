@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <h1>👨‍💼 Employee Management System</h1>
+
+<p class="subtitle">
+    Manage employee records using Flask and PostgreSQL
+</p>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<h3>Total Employees: {{ count }}</h3>
+<body>
+    <div class="container">
+    <h1>Employee Management System</h1>
+
+    <h2>Add Employee</h2>
+
+    <form action="/add" method="POST">
+        <input type="text" name="name" placeholder="Enter Name" required>
+
+        <input type="email" name="email" placeholder="Enter Email" required>
+
+        <input type="text" name="department" placeholder="Enter Department" required>
+
+        <button type="submit">Add Employee</button>
+    </form>
+
+    <br><br>
+
+    <form action="/" method="GET">
+
+    <input
+        type="text"
+        name="search"
+        value="{{ search or '' }}"
+        placeholder="Search Employee">
+
+    <button type="submit">
+        Search
+    </button>
+
+</form>
+{% if no_results %}
+<p class="no-results">
+    ❌ No employee found matching "{{ search }}"
+</p>
+{% endif %}
+
+<br>
+
+    <table border="1" cellpadding="10">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Department </th>
+             <th>Action </th>
+        </tr>
+     
+
+    {% for emp in employees %}
+    <tr>
+        <td>{{ emp[0] }}</td>
+        <td>{{ emp[1] }}</td>
+        <td>{{ emp[2] }}</td>
+        <td>{{ emp[3] }}</td>
+
+        <td>
+            <a class="edit-btn" href="/edit/{{ emp[0] }}">Edit</a>
+            <a class="delete-btn" href="/delete/{{ emp[0] }}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+   
+    {% if no_results %}
+<tr>
+    
+</tr>
+{% endif %}
+
+
+
+    </table>
+    </div>
+
+</body>
+</html>
