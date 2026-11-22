@@ -1,17 +1,16 @@
+
 from flask import Flask, render_template, request, redirect
 import psycopg2
+import os
 
 app = Flask(__name__)
-
+def get_connection():
+    return psycopg2.connect(
+        os.environ.get("DATABASE_URL")
+    )
 @app.route("/")
 def home():
-
-    conn = psycopg2.connect(
-        host="localhost",
-        database="crud_db",
-        user="postgres",
-        password="Esack 77"
-    )
+    conn = get_connection()
 
     cur = conn.cursor()
 
@@ -67,13 +66,7 @@ def add_employee():
     name = request.form["name"]
     email = request.form["email"]
     department = request.form["department"]
-
-    conn = psycopg2.connect(
-        host="localhost",
-        database="crud_db",
-        user="postgres",
-        password="Esack 77"
-    )
+    conn = get_connection()
 
     cur = conn.cursor()
 
@@ -93,14 +86,9 @@ def add_employee():
 
 @app.route("/delete/<int:id>")
 def delete_employee(id):
+    conn = get_connection()
 
-    conn = psycopg2.connect(
-        host="localhost",
-        database="crud_db",
-        user="postgres",
-        password="Esack 77"
-    )
-
+    
     cur = conn.cursor()
 
     cur.execute(
@@ -115,13 +103,9 @@ def delete_employee(id):
 
 @app.route("/edit/<int:id>")
 def edit_employee(id):
+    conn = get_connection()
 
-    conn = psycopg2.connect(
-        host="localhost",
-        database="crud_db",
-        user="postgres",
-        password="Esack 77"
-    )
+    
 
     cur = conn.cursor()
 
@@ -145,13 +129,9 @@ def update_employee(id):
     name = request.form["name"]
     email = request.form["email"]
     department = request.form["department"]
+    conn = get_connection()
 
-    conn = psycopg2.connect(
-        host="localhost",
-        database="crud_db",
-        user="postgres",
-        password="Esack 77"
-    )
+    
 
     cur = conn.cursor()
 
