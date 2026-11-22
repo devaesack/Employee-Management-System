@@ -13,6 +13,18 @@ def home():
     conn = get_connection()
 
     cur = conn.cursor()
+    cur.execute("""
+CREATE TABLE IF NOT EXISTS employees (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100),
+    department VARCHAR(100)
+)
+""")
+
+    conn.commit()
+    
+    
 
     search = request.args.get("search")
 
